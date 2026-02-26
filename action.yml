@@ -1,7 +1,5 @@
 name: Setup Luca
-description: >
-  Installs the Luca CLI tool manager and optionally installs the tools
-  defined in a spec file, adding them to PATH for subsequent steps.
+description: Install the Luca CLI and optionally install project tools from a spec file, adding them to PATH.
 
 branding:
   icon: package
