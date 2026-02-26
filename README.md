@@ -1,75 +1,48 @@
-# LucaTools Actions
+# setup-luca
 
-GitHub Actions for installing and using [Luca](https://luca.tools) — the lightweight CLI tool manager.
-
----
-
-## Actions
-
-### `install-luca`
-
-Installs the Luca CLI on the runner.
-
-```yaml
-- uses: LucaTools/actions/install-luca@v1
-```
-
-| Input | Description | Required | Default |
-|-------|-------------|----------|---------|
-| `version` | Luca version to install (e.g. `"1.2.3"`). Omit to use the latest release. | No | `""` (latest) |
-
----
-
-### `install-tools`
-
-Installs the tools defined in a Luca spec file and adds them to `PATH` for subsequent steps.
-
-> **Requires** `install-luca` to have run first.
-
-```yaml
-- uses: LucaTools/actions/install-tools@v1
-```
-
-| Input | Description | Required | Default |
-|-------|-------------|----------|---------|
-| `spec` | Path to the spec file, relative to the workspace root. | No | `Lucafile` |
-
-After this action runs, all tools listed in the spec file are available by name in subsequent steps (e.g. `swiftlint --version`).
+GitHub Action for installing [Luca](https://luca.tools) — the lightweight CLI tool manager — and optionally installing the tools defined in a spec file.
 
 ---
 
 ## Usage
 
-### Minimal setup
+### Minimal — install Luca CLI only
 
 ```yaml
-steps:
-  - uses: actions/checkout@v4
+- uses: LucaTools/setup-luca@v1
+```
 
-  - uses: LucaTools/actions/install-luca@v1
+### Full setup — install Luca CLI and tools
 
-  - uses: LucaTools/actions/install-tools@v1
-
-  - run: swiftlint --version
+```yaml
+- uses: LucaTools/setup-luca@v1
+  with:
+    spec: Lucafile
 ```
 
 ### Pin a specific Luca version
 
 ```yaml
-- uses: LucaTools/actions/install-luca@v1
+- uses: LucaTools/setup-luca@v1
   with:
     version: "1.2.3"
+    spec: Lucafile
 ```
 
-### Use a custom spec file name
+---
 
-```yaml
-- uses: LucaTools/actions/install-tools@v1
-  with:
-    spec: Lucafile-ci
-```
+## Inputs
 
-### Full workflow example
+| Input | Description | Required | Default |
+|-------|-------------|----------|---------|
+| `version` | Luca version to install (e.g. `"1.2.3"`). Omit to use the latest release. | No | `""` (latest) |
+| `spec` | Path to the Luca spec file, relative to the workspace root. Omit to skip tool installation. | No | `""` (skip) |
+
+When `spec` is provided, all tools listed in the spec file are added to `PATH` and available by name in subsequent steps.
+
+---
+
+## Full workflow example
 
 ```yaml
 name: CI
@@ -87,9 +60,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: LucaTools/actions/install-luca@v1
-
-      - uses: LucaTools/actions/install-tools@v1
+      - uses: LucaTools/setup-luca@v1
+        with:
+          spec: Lucafile
 
       - run: swiftlint --version
       - run: tuist version
