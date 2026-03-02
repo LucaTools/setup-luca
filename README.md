@@ -2,6 +2,10 @@
 
 GitHub Action for installing [Luca](https://luca.tools) — the lightweight CLI tool manager — and optionally installing the tools defined in a spec file.
 
+[![GitHub Marketplace](https://img.shields.io/badge/Marketplace-setup--luca-blue?logo=github)](https://github.com/marketplace/actions/setup-luca)
+
+This action is also published on the [GitHub Actions Marketplace](https://github.com/marketplace/actions/setup-luca).
+
 ---
 
 ## Usage
