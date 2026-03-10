@@ -29,14 +29,14 @@ jobs:
       - name: Setup Luca (pinned, no tools)
         uses: ./
         with:
-          version: "0.5.0"
+          version: "0.7.0"
 
       - name: Verify pinned version is installed
         run: |
           luca --version
           INSTALLED=$(luca --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
-          if [ "$INSTALLED" != "0.5.0" ]; then
-            echo "Expected 0.5.0, got $INSTALLED"
+          if [ "$INSTALLED" != "0.7.0" ]; then
+            echo "Expected 0.7.0, got $INSTALLED"
             exit 1
           fi
 
